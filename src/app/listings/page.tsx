@@ -3,10 +3,16 @@
 import React from "react";
 import { Filter, JobCard } from "../components";
 import { useInfiniteQuery, useQuery } from "react-query";
-import { ClimbingBoxLoader, MoonLoader } from "react-spinners";
+import {
+  ClimbingBoxLoader,
+  MoonLoader,
+  PropagateLoader,
+  RiseLoader,
+} from "react-spinners";
 import { useInView } from "react-intersection-observer";
 
 async function getJobs(pageParam: number) {
+  console.log("next page", pageParam);
   const res = await fetch(`/api/jobs?page=${pageParam}`);
   const users = await res.json();
   return users;
@@ -15,9 +21,11 @@ async function getJobs(pageParam: number) {
 const JobListing = () => {
   const jobsQuery = useInfiniteQuery({
     queryKey: ["hydrate-users"],
-    queryFn: ({ pageParam = 0 }) => getJobs(pageParam),
-    getNextPageParam: (lastPage, allPages) => {
-      return 2;
+    queryFn: ({ pageParam = 1 }) => getJobs(pageParam),
+    getNextPageParam: ({ data }, allPages) => {
+      const { current_page } = data.meta;
+
+      return data.links.next ? current_page + 1 : undefined;
     },
   });
 
@@ -34,7 +42,7 @@ const JobListing = () => {
   if (jobsQuery.isLoading) {
     content = (
       <div className="h-full w-full flex items-center justify-center">
-        <MoonLoader color="#0A6EBD" />
+        <MoonLoader color="#023047" />
       </div>
     );
   }
@@ -53,11 +61,16 @@ const JobListing = () => {
                 description={job.description}
                 company_name={job.company_name}
                 location={job.location}
+                remote={job.remote}
               />
             ))}
           </React.Fragment>
         ))}
-        {jobsQuery.isFetchingNextPage && <div>Loading ...</div>}
+        {jobsQuery.isFetchingNextPage && (
+          <div className="flex flex-col gap-2 justify-center py-4 items-center">
+            Loading <PropagateLoader size={8} color="#023047" />
+          </div>
+        )}
         <div ref={ref}></div>
       </div>
     );

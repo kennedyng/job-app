@@ -16,9 +16,11 @@ module.exports = {
       colors: {
         palette: {
           beige: "#E7CEA6",
-          blue: "#0A6EBD",
-          summer: "#5A96E3",
-          sea: "#A1C2F1",
+          blue: "#023047",
+          summer: "#219ebc",
+          sea: "#8ecae6",
+          yellow: "#ffb703",
+          darkYello: "#fb8500",
         },
       },
     },

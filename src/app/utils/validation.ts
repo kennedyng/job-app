@@ -1,6 +1,6 @@
 import { object, string } from "yup";
 
 export const loginSchema = object({
-  userName: string().required("required"),
+  email: string().required("required").trim(),
   password: string().required("required"),
 });

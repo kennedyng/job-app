@@ -11,9 +11,12 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
+  password    String
+  savedJobs   SavedJobs[]
+  application Application[]
+  profile     Profile?
 }
 
 model Profile {
@@ -24,8 +27,28 @@ model Profile {
   country    String
   createAt   DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     Int      @unique
 }
 
-model savedJobs {
-  slug String @id
+model Application {
+  id         Int      @id @default(autoincrement())
+  job_slug   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     Int?
+}
+
+model SavedJobs {
+  slug         String   @id
+  company_name String
+  title        String
+  description  String
+  location     String
+  remote       Boolean
+  created_at   DateTime @default(now())
+
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
 }

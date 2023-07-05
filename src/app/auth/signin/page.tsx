@@ -5,6 +5,7 @@ import { Input } from "@/app/components";
 import { poppinsFont } from "@/app/utils/fonts";
 import { loginSchema } from "@/app/utils/validation";
 import { useFormik } from "formik";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -12,12 +13,12 @@ import React from "react";
 const SigninPage = () => {
   const formik = useFormik({
     initialValues: {
-      username: "",
+      email: "",
       password: "",
     },
-    validationSchema: loginSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values));
+
+    onSubmit: ({ email, password }) => {
+      signIn("credentials", { email, password });
     },
   });
   return (
@@ -27,17 +28,13 @@ const SigninPage = () => {
         onSubmit={formik.handleSubmit}
       >
         <div className="bg-gradient-to-r from-palette-blue  to-black text-transparent bg-clip-text">
-          <h1
-            className={`font-extrabold text-4xl text-center ${poppinsFont.className}`}
-          >
-            DREAM JOBS
-          </h1>
+          <h1 className={` text-4xl text-center`}>DREAM JOBS</h1>
         </div>
         <h1 className=" text-gray-500 font-extrabold text-xl text-center ">
           Login
         </h1>
 
-        <Input placeholder="Username" {...formik.getFieldProps("username")} />
+        <Input placeholder="Username" {...formik.getFieldProps("email")} />
         <Input
           placeholder="Password"
           type="password"
