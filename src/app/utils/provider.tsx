@@ -3,17 +3,17 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { SessionProvider } from "next-auth/react";
+
+import { ToastContainer, toast } from "react-toastify";
 const queryClient = new QueryClient();
 
 function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
-      <QueryClientProvider client={queryClient}>
-        {children}
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ToastContainer />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

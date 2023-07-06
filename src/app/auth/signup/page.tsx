@@ -7,8 +7,6 @@ import { useFormik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
 import { useMutation } from "react-query";
-import { redirect } from "next/navigation";
-import { useRouter } from "next/router";
 interface UserFromType {
   firstName: string;
   lastName: string;

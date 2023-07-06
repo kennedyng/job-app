@@ -1,26 +1,40 @@
 "use client";
-
 import { facebookIcon, googleIcon } from "@/app/asserts";
 import { Input } from "@/app/components";
-import { poppinsFont } from "@/app/utils/fonts";
-import { loginSchema } from "@/app/utils/validation";
 import { useFormik } from "formik";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const SigninPage = () => {
+  const { status } = useSession();
+
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
+    onSubmit: async ({ email, password }) => {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
 
-    onSubmit: ({ email, password }) => {
-      signIn("credentials", { email, password });
+      if (res?.error) {
+        toast.error(res.error);
+      }
+      if (!res?.error && res?.ok) {
+        toast.success("welcome back. find you dream job");
+        router.push("/listings");
+      }
     },
   });
+
   return (
     <div className="h-screen  w-full flex flex-col items-center justify-center px-10 py-10 lg:px-20 ">
       <form

@@ -13,22 +13,5 @@ export async function PUT(req: Request, res: NextResponse) {
     },
   });
 
-  if (jobExits) {
-    await prisma.savedJobs.update({
-      where: {
-        slug: jobExits.slug,
-        data: {
-          slug: body.slug,
-          comapany_name: body.comapany_name,
-        },
-      },
-    });
-  } else {
-    await prisma.savedJobs.create({
-      data: {
-        slug: body.slug,
-      },
-    });
-  }
-  return NextResponse.json(data, { status: 201 });
+  return NextResponse.json({ status: 201 });
 }

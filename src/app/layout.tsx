@@ -1,8 +1,9 @@
-import "./globals.css";
 import "material-icons/iconfont/material-icons.css";
 import { Inter } from "next/font/google";
+import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import SessionProvider from "./nextAuthContext/SessonProvider";
 import Providers from "./utils/provider";
-import { QueryClientProvider } from "react-query";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <SessionProvider>
+          <Providers>{children}</Providers>
+        </SessionProvider>
       </body>
     </html>
   );
