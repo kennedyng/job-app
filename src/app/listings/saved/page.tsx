@@ -13,7 +13,7 @@ const getSavedJob = async (userId: number) => {
 const SavedJobs = () => {
   const { data } = useSession();
   const savedJobsQuery = useQuery({
-    queryFn: () => getSavedJob(Number(data?.user?.userData?.id)),
+    queryFn: () => getSavedJob(Number(1)),
     queryKey: ["saved_jobs"],
   });
 
