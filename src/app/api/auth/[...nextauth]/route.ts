@@ -1,8 +1,7 @@
-import NextAuth from "next-auth/next";
 import axios from "axios";
-import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
-import { JsonWebTokenError } from "jsonwebtoken";
+import NextAuth from "next-auth/next";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
   session: {

@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import * as jwt from "jsonwebtoken";
 import prisma from "@/app/prisma/utils/prismaCleint";
+import * as jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 export async function POST(req: Request, res: NextResponse) {
   const body = await req.json();
   const userExits = await prisma.user.findFirst({
