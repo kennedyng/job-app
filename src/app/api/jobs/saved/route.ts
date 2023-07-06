@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId");
-  console.log(userId);
+  console.log("userId", userId);
   const data = await prisma.user.findUnique({
     where: {
       id: Number(1),

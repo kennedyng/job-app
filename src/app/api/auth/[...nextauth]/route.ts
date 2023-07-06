@@ -25,6 +25,7 @@ export const authOptions: NextAuthOptions = {
               password,
             })
             .then((response) => {
+              console.log("response =>", response.data);
               return response.data;
             })
             .catch((error) => {
@@ -44,11 +45,16 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.userData = user.userData;
+        token.userData = {
+          country: "zambia",
+          firstName: "kennedy",
+          lastName: "ngosa",
+          id: "1",
+        };
       }
       return token;
     },
-    session({ session, token }) {
+    session({ session, token, user }) {
       if (token && session.user) {
         session.user.userData = token.userData;
       }

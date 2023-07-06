@@ -37,7 +37,7 @@ const JobCard: React.FC<Props> = ({
 }) => {
   const viewMoreToggle = useToggle();
 
-  const { status } = useSession();
+  const { status, data } = useSession();
   const theme = useTheme();
   const jobQuery = useMutation(saveJob, {
     onSuccess: (data) => {
@@ -127,7 +127,7 @@ const JobCard: React.FC<Props> = ({
                   location,
                   created_at,
                   remote,
-                  userId: 1,
+                  userId: Number(data?.user?.userData?.id),
                 })
               }
               className={`flex flex-row items-center gap-4 text-gray-600 ${

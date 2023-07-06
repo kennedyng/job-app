@@ -35,10 +35,7 @@ const sendApplication = async (data: ApplicationType) => {
 };
 const ApplicationForm = () => {
   const { id: jobSlug } = useParams();
-
   const { data } = useSession();
-  const { userData } = data?.user;
-
   console.log(jobSlug);
   const applicationQuery = useMutation(sendApplication);
   const formik = useFormik({
