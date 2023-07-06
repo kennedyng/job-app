@@ -41,7 +41,20 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
   },
-
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.userData = user.userData;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      if (token && session.user) {
+        session.user.userData = token.userData;
+      }
+      return session;
+    },
+  },
   secret: "project",
 };
 

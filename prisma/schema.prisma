@@ -32,12 +32,17 @@ model Profile {
 }
 
 model Application {
-  id         Int      @id @default(autoincrement())
-  job_slug   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  User       User?    @relation(fields: [userId], references: [id])
-  userId     Int?
+  id          Int      @id @default(autoincrement())
+  job_slug    String   @unique
+  coverLetter String
+  firstName   String
+  lastName    String
+  country     String
+  email       String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
 }
 
 model SavedJobs {

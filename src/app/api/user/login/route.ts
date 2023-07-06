@@ -7,6 +7,9 @@ export async function POST(req: Request, res: NextResponse) {
     where: {
       email: body.email,
     },
+    include: {
+      profile: true,
+    },
   });
 
   if (body.password === userExits?.password) {

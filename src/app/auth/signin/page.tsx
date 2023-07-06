@@ -1,16 +1,17 @@
 "use client";
 import { facebookIcon, googleIcon } from "@/app/asserts";
-import { Input } from "@/app/components";
+import { loginSchema } from "@/app/utils/validationSchema";
+import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock";
+import { InputAdornment, TextField } from "@mui/material";
 import { useFormik } from "formik";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 const SigninPage = () => {
-  const { status } = useSession();
-
   const router = useRouter();
 
   const formik = useFormik({
@@ -18,6 +19,8 @@ const SigninPage = () => {
       email: "",
       password: "",
     },
+
+    validationSchema: loginSchema,
     onSubmit: async ({ email, password }) => {
       const res = await signIn("credentials", {
         email,
@@ -48,12 +51,37 @@ const SigninPage = () => {
           Login
         </h1>
 
-        <Input placeholder="Username" {...formik.getFieldProps("email")} />
-        <Input
-          placeholder="Password"
-          type="password"
-          {...formik.getFieldProps("password")}
+        <TextField
+          label="Email"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <EmailIcon />
+              </InputAdornment>
+            ),
+          }}
+          {...formik.getFieldProps("email")}
+          error={Boolean(formik.touched.email) && Boolean(formik.errors.email)}
+          helperText={Boolean(formik.errors.email) && formik.errors.email}
         />
+
+        <TextField
+          label="Password"
+          type="password"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <LockIcon />
+              </InputAdornment>
+            ),
+          }}
+          {...formik.getFieldProps("password")}
+          error={
+            Boolean(formik.touched.password) && Boolean(formik.errors.password)
+          }
+          helperText={Boolean(formik.errors.password) && formik.errors.password}
+        />
+
         <button
           className="bg-palette-blue py-4 text-white font-bold rounded-lg"
           type="submit"

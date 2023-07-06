@@ -1,15 +1,10 @@
 "use client";
 
 import React from "react";
-import { Filter, JobCard } from "../components";
-import { useInfiniteQuery, useQuery } from "react-query";
-import {
-  ClimbingBoxLoader,
-  MoonLoader,
-  PropagateLoader,
-  RiseLoader,
-} from "react-spinners";
 import { useInView } from "react-intersection-observer";
+import { useInfiniteQuery } from "react-query";
+import { MoonLoader, PropagateLoader } from "react-spinners";
+import { Filter, JobCard } from "../components";
 
 async function getJobs(pageParam: number) {
   console.log("next page", pageParam);
