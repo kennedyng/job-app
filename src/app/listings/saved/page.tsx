@@ -1,11 +1,9 @@
 "use client";
-
 import { JobCard } from "@/app/components";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { useQuery } from "react-query";
-
 const getSavedJob = async (userId: number) => {
   console.log(userId);
   const res = await axios.get(`/api/jobs/saved?userId=${userId}`);
@@ -14,7 +12,6 @@ const getSavedJob = async (userId: number) => {
 
 const SavedJobs = () => {
   const { data } = useSession();
-
   const savedJobsQuery = useQuery({
     queryFn: () => getSavedJob(Number(data?.user?.userData?.id)),
     queryKey: ["saved_jobs"],
