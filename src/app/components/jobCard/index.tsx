@@ -54,7 +54,6 @@ const JobCard: React.FC<Props> = ({
   const handleSaveJob = (jobData: JobType) => {
     jobQuery.mutate(jobData);
   };
-
   return (
     <>
       <div className="group p-6 flex flex-col gap-8 rounded-lg border-[1px] border-opacity-5 cursor-pointer duration-300 hover:-translate-y-2 hover:shadow-lg md:flex-row ">
@@ -65,9 +64,7 @@ const JobCard: React.FC<Props> = ({
             {company_name}
           </h6>
           <h1 className={`text-lg self-start font-medium  `}>{title}</h1>
-
           <hr />
-
           <div className="flex flex-col gap-4 justify-between text-gray-600  lg:flex-row">
             <div className="flex flex-row items-center gap-2">
               <span className="material-icons-outlined text-palette-summer">
@@ -133,7 +130,9 @@ const JobCard: React.FC<Props> = ({
                   userId: 1,
                 })
               }
-              className="flex flex-row items-center gap-4 text-gray-600"
+              className={`flex flex-row items-center gap-4 text-gray-600 ${
+                status === "authenticated" ? "visible" : "invisible"
+              }`}
             >
               <div className="flex flex-col">
                 <span className="material-icons-outlined">favorite_border</span>
